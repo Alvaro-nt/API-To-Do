@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ToDoController extends AbstractController
 {
     /**
-     * @Route("/to/do", name="to_do")
+     * @Route("/", name="homepage")
      */
     public function index(): Response
     {
