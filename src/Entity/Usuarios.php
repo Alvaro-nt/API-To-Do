@@ -29,14 +29,14 @@ class Usuarios
      */
     private $password;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Tareas::class, mappedBy="idUsuario", orphanRemoval=true)
-     */
-    private $idTarea;
+ #   /**
+ #    * ORM\OneToMany(targetEntity=Tareas::class, mappedBy="idUsuario", orphanRemoval=true)
+ #    */
+ # private $idTarea;
 
     public function __construct()
     {
-        $this->idTarea = new ArrayCollection();
+       # $this->idTarea = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -68,9 +68,11 @@ class Usuarios
         return $this;
     }
 
-    /**
-     * @return Collection|Tareas[]
-     */
+
+#    /**
+#    * return Collection|Tareas[]
+#     */
+/*
     public function getIdTarea(): Collection
     {
         return $this->idTarea;
@@ -97,10 +99,11 @@ class Usuarios
 
         return $this;
     }
+*/
 
     public function __toString(): string{
 
-        return $this->nombre_usuario;
+        return $this->nombreUsuario;
     }
 
 }
