@@ -37,11 +37,11 @@ class Tareas
      */
     private $realizada;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Usuarios::class, inversedBy="idTarea")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $idUsuario;
+#    /**
+#     * ORM\ManyToOne(targetEntity=Usuarios::class, inversedBy="idTarea")
+#     * ORM\JoinColumn(nullable=false)
+#     */
+#    private $idUsuario;
 
     public function getId(): ?int
     {
@@ -96,6 +96,7 @@ class Tareas
         return $this;
     }
 
+    /*
     public function getIdUsuario(): ?Usuarios
     {
         return $this->idUsuario;
@@ -107,11 +108,11 @@ class Tareas
 
         return $this;
     }
-
+*/
 
     public function __toString(): string{
 
-        return $this->Id . ' '. $this->nombre_usuario;
+        return $this->id;
     }
 
 }
