@@ -19,11 +19,11 @@ _The following software has been used to make this projec_
 ## Versioning 📌
 
 _Here you have an index of all the features, completed and future ones, on each versions. Each version correponds to a trimester_
-* Version 1.0
+* Version 1.0 ✅ ***Released!***
   * Create a To-Do event
   * Check it like finished
   * Check it like NOT finished
-* Version 2.0
+* Version 2.0  🔜 ***Work In progress***
   * Order by created date
   * Sort alphabetically
   * Filter by completed, pending, or all
