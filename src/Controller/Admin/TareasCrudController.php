@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Tareas;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
@@ -23,6 +24,12 @@ class TareasCrudController extends AbstractCrudController
             IntegerField::new('id')->hideOnForm(),
             TextField::new('titulo'),
             TextEditorField::new('descripcion'),
+            ChoiceField::new('categoria')->setChoices([
+                'Reunión' => 'Reunión',
+                'Venta' => 'Venta',
+                'Ocio' => 'Ocio',
+                'Sin categoria' => 'Sin categoria'
+            ]),
             DateTimeField::new('fecha'),
             BooleanField::new('realizada'),
 

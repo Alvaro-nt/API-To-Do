@@ -37,6 +37,11 @@ class Tareas
      */
     private $realizada;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $categoria;
+
 #    /**
 #     * ORM\ManyToOne(targetEntity=Usuarios::class, inversedBy="idTarea")
 #     * ORM\JoinColumn(nullable=false)
@@ -113,6 +118,18 @@ class Tareas
     public function __toString(): string{
 
         return $this->id;
+    }
+
+    public function getCategoria(): ?string
+    {
+        return $this->categoria;
+    }
+
+    public function setCategoria(string $categoria): self
+    {
+        $this->categoria = $categoria;
+
+        return $this;
     }
 
 }
