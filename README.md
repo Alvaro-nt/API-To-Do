@@ -23,13 +23,13 @@ _Here you have an index of all the features, completed and future ones, on each 
   * Create a To-Do event
   * Check it like finished
   * Check it like NOT finished
-* Version 2.0  🔜 ***Work In progress***
+* Version 2.0  ✅ ***Released!***
   * Order by created date
   * Sort alphabetically
   * Filter by completed, pending, or all
   * Add category
   * Filter by category, in an independent view
-* Version 3.0
+* Version 3.0 🔜 ***Work In progress***
   * User management
   * User login with token
   * User persist
