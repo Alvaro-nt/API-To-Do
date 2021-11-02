@@ -3,10 +3,12 @@
 namespace App\Entity;
 
 use App\Repository\TareasRepository;
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=TareasRepository::class)
+ * @ApiResource()
  */
 class Tareas
 {
