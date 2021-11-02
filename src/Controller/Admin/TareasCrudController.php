@@ -3,6 +3,11 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Tareas;
+
+use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
+use EasyCorp\Bundle\EasyAdminBundle\Filter\BooleanFilter;
+use EasyCorp\Bundle\EasyAdminBundle\Filter\ChoiceFilter;
+
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
@@ -10,6 +15,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+
 
 class TareasCrudController extends AbstractCrudController
 {
@@ -35,6 +41,21 @@ class TareasCrudController extends AbstractCrudController
 
             DateTimeField::new('creada')->hideOnForm()
         ];
+    }
+
+    public function configureFilters(Filters $filters): Filters
+    {
+        return $filters
+
+            // most of the times there is no need to define the
+            // filter type because EasyAdmin can guess it automatically
+            ->add(BooleanFilter::new('realizada'))
+            ->add(ChoiceFilter::new('categoria')->setChoices([
+                'Reunión' => 'Reunión',
+                'Venta' => 'Venta',
+                'Ocio' => 'Ocio',
+                'Sin categoria' => 'Sin categoria'
+            ]));
     }
 
 
