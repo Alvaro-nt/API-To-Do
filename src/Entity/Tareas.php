@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\TareasRepository;
 use ApiPlatform\Core\Annotation\ApiResource;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -43,6 +45,16 @@ class Tareas
      * @ORM\Column(type="string", length=255)
      */
     private $categoria;
+
+    /**
+     * @ORM\OneToMany(targetEntity=User::class, mappedBy="tareas", orphanRemoval=true)
+     */
+    private $users;
+
+    public function __construct()
+    {
+        $this->users = new ArrayCollection();
+    }
 
 #    /**
 #     * ORM\ManyToOne(targetEntity=Usuarios::class, inversedBy="idTarea")
@@ -130,6 +142,36 @@ class Tareas
     public function setCategoria(string $categoria): self
     {
         $this->categoria = $categoria;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): self
+    {
+        if (!$this->users->contains($user)) {
+            $this->users[] = $user;
+            $user->setTareas($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): self
+    {
+        if ($this->users->removeElement($user)) {
+            // set the owning side to null (unless already changed)
+            if ($user->getTareas() === $this) {
+                $user->setTareas(null);
+            }
+        }
 
         return $this;
     }

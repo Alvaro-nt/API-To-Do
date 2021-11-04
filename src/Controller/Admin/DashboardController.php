@@ -8,7 +8,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Entity\Usuarios;
+use App\Entity\User;
 use App\Entity\Tareas;
 
 class DashboardController extends AbstractDashboardController
@@ -19,7 +19,7 @@ class DashboardController extends AbstractDashboardController
     public function index(): Response
     {
         $routeBuilder = $this->get(AdminUrlGenerator::class);
-        $url = $routeBuilder->setController(UsuariosCrudController::class)->generateUrl();
+        $url = $routeBuilder->setController(TareasCrudController::class)->generateUrl();
 
         return $this->redirect($url);
     }
@@ -35,7 +35,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linktoDashboard('Dashboard', 'fa fa-home');
         // yield MenuItem::linkToCrud('The Label', 'fas fa-list', EntityClass::class);
         yield MenuItem::linkToRoute('HomePage', 'fas fa-home', 'homepage');
-        yield MenuItem::linkToCrud('Usuarios', 'fas fa-user', Usuarios::class);
+        yield MenuItem::linkToCrud('Usuarios', 'fas fa-user', User::class);
         yield MenuItem::linkToCrud('To-Do', 'fas fa-clipboard-list', Tareas::class);
 
     }

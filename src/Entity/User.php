@@ -42,6 +42,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $isVerified = false;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Tareas::class, inversedBy="users")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $tareas;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -139,6 +145,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setIsVerified(bool $isVerified): self
     {
         $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    public function getTareas(): ?Tareas
+    {
+        return $this->tareas;
+    }
+
+    public function setTareas(?Tareas $tareas): self
+    {
+        $this->tareas = $tareas;
 
         return $this;
     }
