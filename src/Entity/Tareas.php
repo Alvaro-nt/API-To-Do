@@ -47,20 +47,21 @@ class Tareas
     private $categoria;
 
     /**
-     * @ORM\OneToMany(targetEntity=User::class, mappedBy="tareas", orphanRemoval=true)
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="tareas")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $users;
+    private $user;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $creada;
+
 
     public function __construct()
     {
         $this->users = new ArrayCollection();
     }
-
-#    /**
-#     * ORM\ManyToOne(targetEntity=Usuarios::class, inversedBy="idTarea")
-#     * ORM\JoinColumn(nullable=false)
-#     */
-#    private $idUsuario;
 
     public function getId(): ?int
     {
@@ -115,21 +116,8 @@ class Tareas
         return $this;
     }
 
-    /*
-    public function getIdUsuario(): ?Usuarios
+    public function __toString(): string
     {
-        return $this->idUsuario;
-    }
-
-    public function setIdUsuario(?Usuarios $idUsuario): self
-    {
-        $this->idUsuario = $idUsuario;
-
-        return $this;
-    }
-*/
-
-    public function __toString(): string{
 
         return $this->id;
     }
@@ -146,34 +134,27 @@ class Tareas
         return $this;
     }
 
-    /**
-     * @return Collection|User[]
-     */
-    public function getUsers(): Collection
+    public function getUser(): ?User
     {
-        return $this->users;
+        return $this->user;
     }
 
-    public function addUser(User $user): self
+    public function setUser(?User $user): self
     {
-        if (!$this->users->contains($user)) {
-            $this->users[] = $user;
-            $user->setTareas($this);
-        }
+        $this->user = $user;
 
         return $this;
     }
 
-    public function removeUser(User $user): self
+    public function getCreada(): ?\DateTimeInterface
     {
-        if ($this->users->removeElement($user)) {
-            // set the owning side to null (unless already changed)
-            if ($user->getTareas() === $this) {
-                $user->setTareas(null);
-            }
-        }
+        return $this->creada;
+    }
+
+    public function setCreada(\DateTimeInterface $creada): self
+    {
+        $this->creada = $creada;
 
         return $this;
     }
-
 }

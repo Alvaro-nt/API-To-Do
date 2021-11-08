@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Tareas;
 
+use App\Repository\TareasRepository;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\BooleanFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\ChoiceFilter;
@@ -15,6 +16,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 
 
 class TareasCrudController extends AbstractCrudController
@@ -27,7 +29,7 @@ class TareasCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            IntegerField::new('id')->hideOnForm(),
+            IntegerField::new('id')->hideOnForm()->hideOnDetail()->hideOnIndex(),
             TextField::new('titulo'),
             TextEditorField::new('descripcion'),
             ChoiceField::new('categoria')->setChoices([
@@ -38,6 +40,14 @@ class TareasCrudController extends AbstractCrudController
             ]),
             DateTimeField::new('fecha'),
             BooleanField::new('realizada'),
+
+            AssociationField::new('user')
+                ->setRequired(true)
+                ->setFormTypeOptions(['query_builder' => function (TareasRepository $em) {
+                    return $em->createQueryBuilder('f')
+                        ->where('f.id = :user')
+                        ->setParameter('user', $this->getUser()->getUserIdentifier());
+                }])->hideOnForm()->hideOnDetail()->hideOnIndex(),
 
             DateTimeField::new('creada')->hideOnForm()
         ];

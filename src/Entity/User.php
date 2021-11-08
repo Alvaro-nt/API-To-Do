@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -43,10 +45,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $isVerified = false;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Tareas::class, inversedBy="users")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\OneToMany(targetEntity=Tareas::class, mappedBy="user", orphanRemoval=true)
      */
     private $tareas;
+
+    public function __construct()
+    {
+        $this->tareas = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -149,14 +155,32 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getTareas(): ?Tareas
+    /**
+     * @return Collection|Tareas[]
+     */
+    public function getTareas(): Collection
     {
         return $this->tareas;
     }
 
-    public function setTareas(?Tareas $tareas): self
+    public function addTarea(Tareas $tarea): self
     {
-        $this->tareas = $tareas;
+        if (!$this->tareas->contains($tarea)) {
+            $this->tareas[] = $tarea;
+            $tarea->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTarea(Tareas $tarea): self
+    {
+        if ($this->tareas->removeElement($tarea)) {
+            // set the owning side to null (unless already changed)
+            if ($tarea->getUser() === $this) {
+                $tarea->setUser(null);
+            }
+        }
 
         return $this;
     }
