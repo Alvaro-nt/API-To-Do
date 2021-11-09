@@ -49,6 +49,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $tareas;
 
+    /**
+     * @ORM\Column(type="string", length=150, unique=true)
+     */
+    private $username;
+
     public function __construct()
     {
         $this->tareas = new ArrayCollection();
@@ -78,7 +83,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getUserIdentifier(): string
     {
-        return (string) $this->email;
+        return (string) $this->username;
     }
 
     /**
@@ -181,6 +186,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $tarea->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function setUsername(string $username): self
+    {
+        $this->username = $username;
 
         return $this;
     }
