@@ -19,6 +19,7 @@
     <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
     <label for="inputPassword">Password</label>
     <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+    <a href="{{ path('app_forgot_password_request') }}">No recuerdo mi contraseña</a>
 
     <input type="hidden" name="_csrf_token"
            value="{{ csrf_token('authenticate') }}"
@@ -34,7 +35,8 @@
             </label>
         </div>
 
-
+    <a href="{{ path('app_register') }}">¿Aun no estas registrado?</a>
+    <br/>
     <button class="btn btn-lg btn-primary" type="submit">
         Sign in
     </button>
