@@ -14,7 +14,7 @@ class ToDoController extends AbstractController
     public function index(): Response
     {
         return $this->render('to_do/index.html.twig', [
-            'controller_name' => 'ToDoController',
+            'controller_name' => 'lista de tareas',
         ]);
     }
 }

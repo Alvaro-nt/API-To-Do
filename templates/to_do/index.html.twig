@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ToDoController!{% endblock %}
+{% block title %}¡Bienvenido a tu {{ controller_name }}!{% endblock %}
 
 {% block body %}
 <style>
@@ -9,12 +9,18 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <h1> ¡Bienvenido a tu {{ controller_name }} 📝!</h1>
+    <br/>
+    <h3>Tenemos todo preparado, pero antes debes iniciar sesion o registrarte </h3>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/home/alvarolorente/Escritorio/Symfony/API-To-Do/src/Controller/ToDoController.php'|file_link(0) }}">src/Controller/ToDoController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/home/alvarolorente/Escritorio/Symfony/API-To-Do/templates/to_do/index.html.twig'|file_link(0) }}">templates/to_do/index.html.twig</a></code></li>
-    </ul>
+    <br/>
+    <br/>
+
+    <button onclick="location.href='login'" class="btn btn-lg btn-primary" type="submit">
+        Iniciar sesion
+    </button> <button onclick="location.href='register'" class="btn btn-lg btn-primary" type="submit">
+        Registro
+    </button>
+
 </div>
 {% endblock %}
