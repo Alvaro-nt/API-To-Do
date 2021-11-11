@@ -9,7 +9,7 @@ _This API will work locally, no deploy will be done._
 
 ## Made with 🛠️
 
-_The following software has been used to make this projec_
+_The following software has been used to make this project_
 
 * [PHP](https://www.php.net/manual/es/intro-whatis.php) - Programming Languaje
 * [Symfony 5](https://symfony.es/) - Framework
@@ -29,12 +29,12 @@ _Here you have an index of all the features, completed and future ones, on each 
   * Filter by completed, pending, or all
   * Add category
   * Filter by category, in an independent view
-* Version 3.0 🔜 ***Work In progress***
+* Version 3.0 ✅ ***Released!***
   * User management
   * User login with token
   * User persist
   * Password recovery management
-* Version 4.0
+* Version 4.0 🔜 ***Work In progress***
   * Dockerize project
 
 ## Author ✒️
