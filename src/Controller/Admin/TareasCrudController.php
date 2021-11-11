@@ -22,7 +22,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Orm\EntityRepository;
@@ -40,7 +40,7 @@ class TareasCrudController extends AbstractCrudController
         return [
             IntegerField::new('id')->hideOnForm()->hideOnDetail()->hideOnIndex(),
             TextField::new('titulo'),
-            TextEditorField::new('descripcion'),
+            TextAreaField::new('descripcion'),
             ChoiceField::new('categoria')->setChoices([
                 'Reunión' => 'Reunión',
                 'Venta' => 'Venta',
@@ -90,6 +90,8 @@ class TareasCrudController extends AbstractCrudController
         return $actions
             ->add(Crud::PAGE_INDEX, Action::DETAIL)
             ->add(Crud::PAGE_EDIT, Action::SAVE_AND_ADD_ANOTHER)
+            ->remove(Crud::PAGE_DETAIL, ACTION:: DELETE)
+
             ;
     }
 
@@ -97,6 +99,7 @@ class TareasCrudController extends AbstractCrudController
     {
         return $crud
             ->showEntityActionsInlined(true)
+            ->setPageTitle('detail', fn (Tareas $tareas) => sprintf($tareas->getTitulo()))
             ;
     }
 }
