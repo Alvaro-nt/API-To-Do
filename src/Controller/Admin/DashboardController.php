@@ -2,6 +2,8 @@
 
 namespace App\Controller\Admin;
 
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
@@ -16,8 +18,14 @@ class DashboardController extends AbstractDashboardController
     /**
      * @Route("/admin", name="admin")
      */
+
     public function index(): Response
     {
+        if ($this->getUser() === NULL) {
+
+            return $this->redirect('login');
+        }
+
         $routeBuilder = $this->get(AdminUrlGenerator::class);
         $url = $routeBuilder->setController(TareasCrudController::class)->generateUrl();
 
