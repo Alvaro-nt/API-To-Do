@@ -34,8 +34,10 @@ _Here you have an index of all the features, completed and future ones, on each 
   * User login with token
   * User persist
   * Password recovery management
-* Version 4.0 🔜 ***Work In progress***
+* Version 4.0 ✅ ***Released!***
   * Dockerize project
+* Version 5.0 🔜 ***Work In progress***
+  * ¿?
 
 ## Author ✒️
 
