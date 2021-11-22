@@ -1,37 +1,48 @@
-version: '3'
-
+version: "3"
 services:
-  myapp:
-    image: docker.io/bitnami/symfony:1
+  app:
+    image: 'bitnami/symfony:1'
+    container_name: symfony
     ports:
       - '8000:8000'
     volumes:
-      - '.:/app/ToDoAPI'
+      - '.:/app/APIToDo'
     environment:
-      - SYMFONY_PROJECT_NAME=ToDoAPI
-      - MARIADB_HOST=mariadb
-      - MARIADB_PORT_NUMBER=3306
-      - MARIADB_USER=alvaro
-      - MARIADB_PASSWORD=alvaro
-      - MARIADB_DATABASE=ToDo_BD
-    container_name: symfony_container
+      SYMFONY_PROJECT_NAME: APIToDo
+      MARIADB_HOST: mariadb
+      MARIADB_PORT_NUMBER: 3306
+      MARIADB_ROOT_USER: ${MYSQL_ROOT_USER}
+      MARIADB_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MARIADB_USER: ${MYSQL_USER}
+      MARIADB_PASSWORD: ${MYSQL_PASSWORD}
+      MARIADB_DATABASE: ${MYSQL_DATABASE}
     depends_on:
-      - mysql
-  mysql:
-    container_name: mysql
-    image: docker.io/mysql:5.7
+      - db
+      - mailcatcher
+  mailcatcher:
+    image: schickling/mailcatcher
     ports:
-      - '3306:3306'
-    environment:
-      - ALLOW_EMPTY_PASSWORD=yes
-      - MYSQL_DATABASE=ToDo_BD
-      - MYSQL_PORT_NUMBER=3306
-      - MYSQL_ROOT_USER=root
-      - MYSQL_ROOT_PASSWORD=alvaro
-      - MYSQL_USER=alvaro
-      - MYSQL_PASSWORD=alvaro
-    volumes:
-      - db:/var/lib/mysql/
-      - ./ToDo.sql:/docker-entrypoint-initdb.d/ToDo.sql
-volumes:
+      - "1025:1025"
+      - "1080:1080"
   db:
+    image: mysql
+    container_name: mysqldb
+    environment:
+      ALLOW_EMPTY_PASSWORD: 'yes'
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_PORT_NUMBER: 3306
+      MYSQL_ROOT_HOST: '%'
+      MYSQL_ROOT_USER: ${MYSQL_ROOT_USER}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    ports:
+      - "3306:3306"
+    expose:
+      - "3306"
+    volumes:
+      - ./mydb:/var/lib/mysql
+      - ./mydb-script/ToDo.sql:/docker-entrypoint-initdb.d/ToDo.sql
+volumes:
+  mydb:
+  mydb-script:
