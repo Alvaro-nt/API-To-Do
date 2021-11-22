@@ -9,4 +9,5 @@
 /vendor/
 .env
 *.sql
+/mydb/
 ###< symfony/framework-bundle ###
