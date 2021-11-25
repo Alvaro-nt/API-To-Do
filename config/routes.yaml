@@ -1,4 +1,4 @@
-#index:
+#index:false
 #    path: /
 #    controller: App\Controller\DefaultController::index
 api_login_check:
