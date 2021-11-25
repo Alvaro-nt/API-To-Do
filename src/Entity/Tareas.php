@@ -4,13 +4,31 @@ namespace App\Entity;
 
 use App\Repository\TareasRepository;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Core\Annotation\ApiProperty;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=TareasRepository::class)
- * @ApiResource()
+ * @ApiResource(
+ *     attributes={"security"="is_granted('ROLE_USER')"},
+ *     collectionOperations={
+"post"={"security"="is_granted('ROLE_ADMIN')", "security_message"="Solo el administrador puede añadir tareas."}
+ *     },
+ *     itemOperations={
+ *         "get"={"security"="is_granted('ROLE_ADMIN') or object.owner == user", "security_message"="No eres administrador o el usuario autorizado"},
+ *         "put"={"security"="is_granted('ROLE_ADMIN') or (object.owner == user and previous_object.owner == user)", "security_message"="No eres administrador o el usuario autorizado."}
+ *     },
+ *     order={"fecha"="DESC"},
+ *     paginationEnabled=false
+ * )
+ *
+ * @ApiFilter(SearchFilter::class, properties={"user": "exact"})
  */
 class Tareas
 {
