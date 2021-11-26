@@ -87,10 +87,16 @@ class TareasCrudController extends AbstractCrudController
 
     public function configureActions(Actions $actions): Actions
     {
+        $transferTask = Action::new('transferir_tareas', 'Transferir tarea')
+            ->setIcon('fas fa-exchange-alt')
+            ->linkToRoute('transferir_tareas');
+
         return $actions
             ->add(Crud::PAGE_INDEX, Action::DETAIL)
             ->add(Crud::PAGE_EDIT, Action::SAVE_AND_ADD_ANOTHER)
             ->remove(Crud::PAGE_DETAIL, ACTION:: DELETE)
+            ->add(Crud::PAGE_INDEX, $transferTask)
+            ->add(Crud::PAGE_DETAIL, $transferTask)
 
             ;
     }

@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Task Transfer{% endblock %}
+
+{% block body %}
+    {% if app.user %}
+        <div class="mb-3">
+            Vas a tranferir una tarea desde <b>{{ app.user.username }}</b></a>
+        </div>
+    {% endif %}
+
+    <h1 class="h3 mb-3 font-weight-normal">Tranferencia de una tarea</h1>
+    {{ form_start(taskTransferForm) }}
+    {{ form_row(taskTransferForm.username, {
+        label: 'Usuario a transferir'
+    }) }}
+
+    <a href="{{ path('admin') }}">Volver a las tareas</a>
+    <br/>
+    <button class="btn btn-lg btn-primary" type="submit">
+        Transferir
+    </button>
+    {{ form_end(taskTransferForm) }}
+{% endblock %}
