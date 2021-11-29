@@ -47,7 +47,7 @@ _Here you have an index of all the features, completed and future ones, on each 
     * updateTask
     * deleteDask
   * Implement of a login functionality in API Platform
-* Version 6.0 🔜 ***Work In progress***
+* Version 6.0 ✅ ***Released!***
   * Add a custom [Symfony Form](https://symfony.com/doc/current/forms.html) to transfer task to another user
   * This form must be accessible from the task level, next to the task. (Extend from EasyAdmin)
   * The action of transfer a task must meet the following objectives
@@ -55,6 +55,8 @@ _Here you have an index of all the features, completed and future ones, on each 
     * Task marked as finished can't be transferred
     * To transfer the task to another user, the receiver one can't have more than three active task
     * A task can't be transferred more than two times
+* Version 7.0 🔜 ***Work In progress***
+  * ¿?
 
 ## Author ✒️
 

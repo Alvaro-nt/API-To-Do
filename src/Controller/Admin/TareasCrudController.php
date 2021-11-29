@@ -2,9 +2,11 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Tarea;
 use App\Entity\Tareas;
 
 use App\Repository\TareasRepository;
+use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\QueryBuilder;
 use EasyCorp\Bundle\EasyAdminBundle\Collection\FieldCollection;
 use EasyCorp\Bundle\EasyAdminBundle\Collection\FilterCollection;
@@ -12,6 +14,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
+use EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext;
 use EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto;
 use EasyCorp\Bundle\EasyAdminBundle\Dto\SearchDto;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\BooleanFilter;
@@ -26,6 +29,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Orm\EntityRepository;
+use http\Env\Request;
 
 
 class TareasCrudController extends AbstractCrudController
@@ -58,6 +62,8 @@ class TareasCrudController extends AbstractCrudController
                         ->setParameter('user', $this->getUser()->getUserIdentifier());
                 }])->hideOnForm()->hideOnDetail()->hideOnIndex(),
 
+            IntegerField::new("vecesTransferida")->hideOnForm(),
+
             DateTimeField::new('creada')->hideOnForm()
         ];
     }
@@ -87,10 +93,17 @@ class TareasCrudController extends AbstractCrudController
 
     public function configureActions(Actions $actions): Actions
     {
+        $transferTask = Action::new('taskTransfer', 'Transferir tarea')
+            ->setIcon('fas fa-exchange-alt')
+            ->linkToCrudAction('extraerIdTarea')
+            ->displayIf(fn (Tareas $tarea) => ($tarea->getRealizada() == false) && ($tarea->getVecesTransferida() < 2));;
+
         return $actions
             ->add(Crud::PAGE_INDEX, Action::DETAIL)
             ->add(Crud::PAGE_EDIT, Action::SAVE_AND_ADD_ANOTHER)
             ->remove(Crud::PAGE_DETAIL, ACTION:: DELETE)
+            ->add(Crud::PAGE_INDEX, $transferTask)
+            ->add(Crud::PAGE_DETAIL, $transferTask)
 
             ;
     }
@@ -101,5 +114,18 @@ class TareasCrudController extends AbstractCrudController
             ->showEntityActionsInlined(true)
             ->setPageTitle('detail', fn (Tareas $tareas) => sprintf($tareas->getTitulo()))
             ;
+    }
+
+
+    public function extraerIdTarea(AdminContext $context)
+    {
+        $id     = $context->getRequest()->query->get('entityId');
+        $tareas = $this->getDoctrine()->getRepository(Tareas::class)->find($id);
+        $end     = $tareas->getRealizada();
+
+        $end = $end ? 'true' : 'false';
+
+        return $this->redirectToRoute('taskTransfer', array('id' => $id, 'end' => $end));
+
     }
 }

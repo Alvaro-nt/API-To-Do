@@ -75,6 +75,11 @@ class Tareas
      */
     private $creada;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $vecesTransferida;
+
 
     public function __construct()
     {
@@ -172,6 +177,18 @@ class Tareas
     public function setCreada(\DateTimeInterface $creada): self
     {
         $this->creada = $creada;
+
+        return $this;
+    }
+
+    public function getVecesTransferida(): ?int
+    {
+        return $this->vecesTransferida;
+    }
+
+    public function setVecesTransferida(?int $vecesTransferida): self
+    {
+        $this->vecesTransferida = $vecesTransferida;
 
         return $this;
     }

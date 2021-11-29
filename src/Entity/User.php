@@ -14,6 +14,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
+ * @UniqueEntity(fields={"username"}, message="There is already an account with this username")
  * @ApiResource()
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
@@ -85,7 +86,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getUserIdentifier(): string
     {
-        return (string)$this->username;
+        return (string)$this->email;
     }
 
     /**
