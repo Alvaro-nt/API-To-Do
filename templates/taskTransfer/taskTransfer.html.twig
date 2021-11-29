@@ -11,9 +11,8 @@
 
     <h1 class="h3 mb-3 font-weight-normal">Tranferencia de una tarea</h1>
     {{ form_start(taskTransferForm) }}
-    {{ form_row(taskTransferForm.username, {
-        label: 'Usuario a transferir'
-    }) }}
+    {{ form_row(taskTransferForm.username) }}
+    {{ form_errors(taskTransferForm) }}
 
     <a href="{{ path('admin') }}">Volver a las tareas</a>
     <br/>
